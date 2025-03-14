@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         KACE+
+// @name         KACE XT
 // @namespace    com.github.pshock13
-// @version      20250218
-// @description  Shows ticket counts per tech in a sidebar
+// @version      20250314
+// @description  Adds additional functionality to KACE
 // @match        https://smyrna-kbox.smyrna.k12.de.us/*
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
@@ -13,6 +13,7 @@
     // Find the main side navigation container list
     function createSidebar(techMapping) {
         const sideNavContainer = document.querySelector('.k-main-side-nav-container > ul');
+        // Just let's us know in the console if the sidebar was found or not
         if (!sideNavContainer) {
             console.error('Side navigation container NOT found!');
             return;
@@ -81,6 +82,7 @@
                 techMapping[ownerId] = techName;
             }
         });
+        // console.log(techMapping)
 
         // Cache the tech mapping in localStorage
         localStorage.setItem('techMapping', JSON.stringify(techMapping));
@@ -91,7 +93,7 @@
     // Add toggle functionality to hide/show tech names with MutationObserver
 function addSidebarToggleListener() {
     const techList = document.querySelector('.tech-list');
-    const toggleButton = document.querySelector('.k-main-side-nav-container ul li.k-min-nav-ctrl');
+    const toggleButton = document.querySelector('.k-main-side-nav-container ul li#ticket-count');
 
     // Check if the toggle button has appeared in the DOM
     if (toggleButton) {
